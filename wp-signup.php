@@ -247,7 +247,7 @@ function show_user_form($user_name = '', $user_email = '', $errors = '') {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @param WP_Error $errors A WP_Error object containing containing 'user_name' or 'user_email' errors.
+	 * @param WP_Error $errors A WP_Error object containing 'user_name' or 'user_email' errors.
 	 */
 	do_action( 'signup_extra_fields', $errors );
 }
@@ -470,10 +470,13 @@ function confirm_another_blog_signup( $domain, $path, $blog_title, $user_name, $
 	?></h2>
 	<p>
 		<?php printf(
-			/* translators: 1: home URL, 2: site address, 3: login URL, 4: username */
-			__( '<a href="%1$s">%2$s</a> is your new site. <a href="%3$s">Log in</a> as &#8220;%4$s&#8221; using your existing password.' ),
-			esc_url( $home_url ),
-			untrailingslashit( $domain . $path ),
+			/* translators: 1: link to new site, 2: login URL, 3: username */
+			__( '%1$s is your new site. <a href="%2$s">Log in</a> as &#8220;%3$s&#8221; using your existing password.' ),
+			sprintf(
+				'<a href="%s">%s</a>',
+				esc_url( $home_url ),
+				untrailingslashit( $domain . $path )
+			),
 			esc_url( $login_url ),
 			$user_name
 		); ?>

@@ -308,10 +308,48 @@ function map_meta_cap( $cap, $user_id ) {
 
 		$has_filter = has_filter( "auth_{$object_type}_meta_{$meta_key}" ) || has_filter( "auth_{$object_type}_{$sub_type}_meta_{$meta_key}" );
 		if ( $meta_key && $has_filter ) {
-			/** This filter is documented in wp-includes/meta.php */
+
+			/**
+			 * Filters whether the user is allowed to edit meta.
+			 *
+			 * Use the {@see auth_post_$object_type_meta_$meta_key} filter to modify capabilities for
+			 * specific object types. Return true to have the mapped meta caps from edit_{$object_type} apply.
+			 *
+			 * The dynamic portion of the hook name, `$object_type` refers to the object type being filtered.
+			 * The dynamic portion of the hook name, `$meta_key`, refers to the meta key passed to map_meta_cap().
+			 *
+			 * @since 3.3.0 As 'auth_post_meta_{$meta_key}'.
+			 * @since 4.6.0
+			 *
+			 * @param bool   $allowed  Whether the user can add the post meta. Default false.
+			 * @param string $meta_key The meta key.
+			 * @param int    $post_id  Post ID.
+			 * @param int    $user_id  User ID.
+			 * @param string $cap      Capability name.
+			 * @param array  $caps     User capabilities.
+			 */
 			$allowed = apply_filters( "auth_{$object_type}_meta_{$meta_key}", false, $meta_key, $object_id, $user_id, $cap, $caps );
 
-			/** This filter is documented in wp-includes/meta.php */
+			/**
+			 * Filters whether the user is allowed to add post meta to a post of a given type.
+			 *
+			 * Use the {@see auth_$object_type_$sub_type_meta_$meta_key} filter to modify capabilities for
+			 * specific object types/subtypes. Return true to have the mapped meta caps from edit_{$object_type} apply.
+			 *
+			 * The dynamic portion of the hook name, `$object_type` refers to the object type being filtered.
+			 * The dynamic portion of the hook name, `$sub_type` refers to the object subtype being filtered.
+			 * The dynamic portion of the hook name, `$meta_key`, refers to the meta key passed to map_meta_cap().
+			 *
+			 * @since 4.6.0 As 'auth_post_{$post_type}_meta_{$meta_key}'.
+			 * @since 4.7.0
+			 *
+			 * @param bool   $allowed  Whether the user can add the post meta. Default false.
+			 * @param string $meta_key The meta key.
+			 * @param int    $post_id  Post ID.
+			 * @param int    $user_id  User ID.
+			 * @param string $cap      Capability name.
+			 * @param array  $caps     User capabilities.
+			 */
 			$allowed = apply_filters( "auth_{$object_type}_{$sub_type}_meta_{$meta_key}", $allowed, $meta_key, $object_id, $user_id, $cap, $caps );
 
 			if ( ! $allowed ) {
@@ -394,6 +432,10 @@ function map_meta_cap( $cap, $user_id ) {
 		break;
 	case 'install_languages':
 	case 'update_languages':
+		if ( ! function_exists( 'request_filesystem_credentials' ) ) {
+			require_once( ABSPATH . 'wp-admin/includes/file.php' );
+		}
+
 		if ( ! function_exists( 'wp_can_install_language_pack' ) ) {
 			require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
 		}
@@ -565,13 +607,13 @@ function current_user_can( $capability ) {
 }
 
 /**
- * Whether current user has a capability or role for a given site.
+ * Whether the current user has a specific capability for a given site.
  *
  * @since 3.0.0
  *
  * @param int    $blog_id    Site ID.
- * @param string $capability Capability or role name.
- * @return bool
+ * @param string $capability Capability name.
+ * @return bool Whether the user has the given capability.
  */
 function current_user_can_for_blog( $blog_id, $capability ) {
 	$switched = is_multisite() ? switch_to_blog( $blog_id ) : false;
@@ -598,13 +640,13 @@ function current_user_can_for_blog( $blog_id, $capability ) {
 }
 
 /**
- * Whether author of supplied post has capability or role.
+ * Whether the author of the supplied post has a specific capability.
  *
  * @since 2.9.0
  *
- * @param int|object $post Post ID or post object.
- * @param string $capability Capability or role name.
- * @return bool
+ * @param int|WP_Post $post       Post ID or post object.
+ * @param string      $capability Capability name.
+ * @return bool Whether the post author has the given capability.
  */
 function author_can( $post, $capability ) {
 	if ( !$post = get_post($post) )
@@ -622,13 +664,13 @@ function author_can( $post, $capability ) {
 }
 
 /**
- * Whether a particular user has capability or role.
+ * Whether a particular user has a specific capability.
  *
  * @since 3.1.0
  *
- * @param int|object $user User ID or object.
- * @param string $capability Capability or role name.
- * @return bool
+ * @param int|WP_User $user       User ID or object.
+ * @param string      $capability Capability name.
+ * @return bool Whether the user has the given capability.
  */
 function user_can( $user, $capability ) {
 	if ( ! is_object( $user ) )
