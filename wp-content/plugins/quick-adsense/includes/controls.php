@@ -34,7 +34,13 @@ if(!function_exists('quickadsense_get_control')) {
 				if($label != '') {
 					$output .= '<label for="'.$name.'">'.$label.'</label><br />';
 				}
-				$output .= '<textarea id="'.$id.'" name="'.$name.'" class="multilanguage-input '.$class.'" class="height: 100px;" style="'.$style.'"  placeholder="'.$placeholder.'">'.$value.'</textarea>';			
+				$output .= '<textarea id="'.$id.'" name="'.$name.'" class="multilanguage-input '.$class.'" class="multilanguage-input '.$class.'" style="height: 100px; '.$style.'"  placeholder="'.$placeholder.'">'.$value.'</textarea>';			
+				break;
+			case 'textarea-big':
+				if($label != '') {
+					$output .= '<label for="'.$name.'">'.$label.'</label><br />';
+				}
+				$output .= '<textarea id="'.$id.'" name="'.$name.'" class="multilanguage-input '.$class.'" class="multilanguage-input '.$class.'" style="height: 300px; '.$style.'"  placeholder="'.$placeholder.'">'.$value.'</textarea>';			
 				break;
 			case 'select':
 				if($label != '') {

@@ -141,7 +141,7 @@ function quick_adsense_vi_get_chart() {
 		echo '</div>';
 		echo '<div class="clear"></div>';
 	} else {
-		echo '<p class="viError">There was an error processing your request, our team was notified.<br />Please try again later.</p>';
+		echo '<p class="viError">There was an error processing your request, our team was notified.<br />Try clearing your browser cache, log out and log in again.</p>';
 		echo '<div id="quick_adsense_vi_earnings_wrapper">';
 			echo '<div id="quick_adsense_vi_earnings">';
 				echo '<span id="quick_adsense_vi_earnings_label">Total Earnings</span>';
@@ -171,7 +171,7 @@ function quick_adsense_vi_signup_form_get_content() {
 		echo '</div>';
 	} else {
 		echo '<div class="quick_adsense_popup_content_wrapper">';
-			echo '<p> There was an error processing your request. Please try again later. </p>';
+			echo '<p> There was an error processing your request. Please try again later.</p>';
 		echo '</div>';
 	}
 	die();
@@ -315,22 +315,21 @@ function quick_adsense_vi_customize_adcode_form_get_content() {
 						echo quickadsense_get_control('select', 'Native Text Font Size', 'quick_adsense_vi_code_settings_font_size', 'quick_adsense_vi_code_settings_font_size', ((isset($vicodeSettings['font_size']))?$vicodeSettings['font_size']:''), quick_adsense_vi_get_constant_font_sizes());
 						echo '<small></small>';
 					echo '</p>';
-					echo '<p>';
-						echo quickadsense_get_control('textarea', 'Optional 1', 'quick_adsense_vi_code_settings_optional_1', 'quick_adsense_vi_code_settings_optional_1', ((isset($vicodeSettings['optional_1']))?$vicodeSettings['optional_1']:''), null, 'input widefat', '', 'Max length 200 chars');
-						echo '<small></small>';
-					echo '</p>';
-					echo '<p>';
-						echo quickadsense_get_control('textarea', 'Optional 2', 'quick_adsense_vi_code_settings_optional_2', 'quick_adsense_vi_code_settings_optional_2', ((isset($vicodeSettings['optional_2']))?$vicodeSettings['optional_2']:''), null, 'input widefat', '', 'Max length 200 chars');
-						echo '<small></small>';
-					echo '</p>';
-					echo '<p>';
-						echo quickadsense_get_control('textarea', 'Optional 3', 'quick_adsense_vi_code_settings_optional_3', 'quick_adsense_vi_code_settings_optional_3', ((isset($vicodeSettings['optional_3']))?$vicodeSettings['optional_3']:''), null, 'input widefat', '', 'Max length 200 chars');
-						echo '<small></small>';
-					echo '</p>';
 					echo '<p class="quick_adsense_vi_delay_notice">vi Ad Changes might take some time to take into effect</p>';
 				echo '</div>';
 				echo '<div class="clear"></div>';
 			echo '</div>';
+		echo '</div>';
+	echo '</div>';
+	echo '<div style="margin: 15px 0; padding: 5px; border: 1px solid #999999; border-radius: 5px; position: relative;">';
+		echo '<label style="font-weight: bold; position: absolute; left: 15px; top: -10px; background: #FFFFFF; color: #111111; padding: 0px 10px;">vi stories: GDPR Compliance</label>';
+		echo '<div style="margin: 10px 0 10px; padding: 0 10px; position: relative;">';
+			echo '<p>Enable GDPR Compliance confirmation notice on your site for visitors from EU.<br />If you disable this option make sure you are using a data usage authorization system on your website to remain GDPR complaint.</p>';
+			$gdprComplainceOptions = array(
+				array('text' => 'Status : Do not Show GDPR Authorization Popup', 'value' => 'false'),
+				array('text' => 'Status : Show GDPR Authorization Popup', 'value' => 'true')
+			);
+			echo quickadsense_get_control('select', '', 'quick_adsense_vi_code_settings_show_gdpr_authorization', 'quick_adsense_vi_code_settings_show_gdpr_authorization', ((isset($vicodeSettings['show_gdpr_authorization']))?$vicodeSettings['show_gdpr_authorization']:''), $gdprComplainceOptions);
 		echo '</div>';
 	echo '</div>';
 	echo '<script type="text/javascript">';
@@ -356,9 +355,8 @@ function quick_adsense_vi_customize_adcode_form_save_action() {
 	$vicodeSettings['native_text_color'] = ((isset($_POST['quick_adsense_vi_code_settings_native_text_color']))?$_POST['quick_adsense_vi_code_settings_native_text_color']:'');
 	$vicodeSettings['font_family'] = ((isset($_POST['quick_adsense_vi_code_settings_font_family']))?$_POST['quick_adsense_vi_code_settings_font_family']:'');
 	$vicodeSettings['font_size'] = ((isset($_POST['quick_adsense_vi_code_settings_font_size']))?$_POST['quick_adsense_vi_code_settings_font_size']:'');
-	$vicodeSettings['optional_1'] = ((isset($_POST['quick_adsense_vi_code_settings_optional_1']))?$_POST['quick_adsense_vi_code_settings_optional_1']:'');
-	$vicodeSettings['optional_2'] = ((isset($_POST['quick_adsense_vi_code_settings_optional_2']))?$_POST['quick_adsense_vi_code_settings_optional_2']:'');
-	$vicodeSettings['optional_3'] = ((isset($_POST['quick_adsense_vi_code_settings_optional_3']))?$_POST['quick_adsense_vi_code_settings_optional_3']:'');
+	
+	$vicodeSettings['show_gdpr_authorization'] = ((isset($_POST['quick_adsense_vi_code_settings_show_gdpr_authorization']))?$_POST['quick_adsense_vi_code_settings_show_gdpr_authorization']:'');
 	update_option('quick_adsense_vi_code_settings', $vicodeSettings);
 	$viCodeStatus = quick_adsense_vi_api_set_vi_code($vicodeSettings);
 	if(is_array($viCodeStatus) && (isset($viCodeStatus['status'])) && ($viCodeStatus['status'] == 'error')) {
@@ -367,7 +365,8 @@ function quick_adsense_vi_customize_adcode_form_save_action() {
 			echo '<p class="viError">'.$viCodeStatus['message'].'</p>';
 		} else {
 			echo '###FAIL###';
-			echo '<p class="viError">There was an error processing your request, our team was notified.<br />Please try again later.</p>';
+			echo '<p class="viError">There was an error processing your request, our team was notified.<br />Try clearing your browser cache, log out and log in again.</p>';
+			echo '<p style="font-size: 10px; margin: 0;">'.$viCodeStatus['errorCode'].': '.$viCodeStatus['message'].'</p>';
 		}
 	} else {
 		echo '###SUCCESS###';

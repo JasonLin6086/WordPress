@@ -35,16 +35,18 @@ function quick_adsense_admin_init() {
     add_settings_section('quick_adsense_general', '', 'quick_adsense_general_content', 'quick-adsense-general');
 	add_settings_section('quick_adsense_onpost', '', 'quick_adsense_onpost_content', 'quick-adsense-onpost');
 	add_settings_section('quick_adsense_widgets', '', 'quick_adsense_widgets_content', 'quick-adsense-widgets');
+	add_settings_section('quick_adsense_header_footer_codes', '', 'quick_adsense_header_footer_codes_plugin_card', 'quick-adsense-header-footer-codes');
 }
 
 function quick_adsense_settings_page() { ?>
     <div class="wrap">
-		<h2 id="quick_adsense_title">Quick Adsense Setting <span style="font-size: 14px;">(Version 2.3)</span></h2>
+		<h2 id="quick_adsense_title">Quick Adsense Setting <span style="font-size: 14px;">(Version 2.4)</span></h2>
 		<form id="quick_adsense_settings_form" method="post" action="options.php" name="wp_auto_commenter_form" style="display: none;">
 			<?php settings_fields('quick_adsense_settings'); ?>
 			<div id="quick_adsense_settings_tabs">
 				<ul>
 					<li><a href="#tabs-settings">Settings</a></li>
+					<li><a href="#tabs-header-footer-codes">Header / Footer Codes</a></li>
 					<li><a href="#tabs-vi"> Monetization with vi stories </a></li>
 				</ul>
 				<div id="tabs-settings">
@@ -60,6 +62,10 @@ function quick_adsense_settings_page() { ?>
 						</div>
 						<div class="clear"></div>
 					</div>
+					<?php submit_button('Save Changes'); ?>
+				</div>
+				<div id="tabs-header-footer-codes">
+					<?php do_settings_sections('quick-adsense-header-footer-codes'); ?>
 					<?php submit_button('Save Changes'); ?>
 				</div>
 				<div id="tabs-vi">
@@ -78,6 +84,28 @@ function quick_adsense_settings_page() { ?>
 <?php
 }
 
+function quick_adsense_header_footer_codes_plugin_card() {
+	$settings = get_option('quick_adsense_settings');
+	echo '<div id="quick_adsense_top_sections_wrapper">';
+		echo '<div class="quick_adsense_block">';
+			echo '<div class="quick_adsense_block_labels">';
+				echo '<span>Header<br />Embed Code</span>';
+			echo '</div>';
+			echo '<div class="quick_adsense_block_controls">';
+				echo quickadsense_get_control('textarea-big', '', 'quick_adsense_settings_header_embed_code', 'quick_adsense_settings[header_embed_code]', ((isset($settings['header_embed_code']))?$settings['header_embed_code']:''));
+			echo '</div>';
+			echo '<div class="clear"></div>';
+			echo '<div class="quick_adsense_block_labels">';
+				echo '<span>Footer<br />Embed Code</span>';
+			echo '</div>';
+			echo '<div class="quick_adsense_block_controls">';
+				echo quickadsense_get_control('textarea-big', '', 'quick_adsense_settings_footer_embed_code', 'quick_adsense_settings[footer_embed_code]', ((isset($settings['footer_embed_code']))?$settings['footer_embed_code']:''));
+			echo '</div>';
+			echo '<div class="clear"></div>';
+		echo '</div>';
+	echo '</div>';
+}
+
 function quick_adsense_vi_plugin_card() {
 	echo '<div class="quick_adsense_vi_block">';
 			if(quick_adsense_vi_api_is_loggedin()) {
@@ -88,7 +116,7 @@ function quick_adsense_vi_plugin_card() {
 	echo '</div>';
 }
 
-function quick_adsense_general_content() {
+function quick_adsense_general_content() {	
 	$settings = get_option('quick_adsense_settings');
 	echo '<div class="quick_adsense_block">';
 		echo '<div class="quick_adsense_block_labels">';

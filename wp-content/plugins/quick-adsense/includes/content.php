@@ -3,6 +3,22 @@ $quickAdsenseAdsDisplayed = 0;
 $quickAdsenseAdsId = array();
 $quickAdsenseBeginEnd = 0;
 
+add_action('wp_head', 'quick_adsense_embed_wp_head');
+function quick_adsense_embed_wp_head() {
+	$settings = get_option('quick_adsense_settings');
+	if(isset($settings['header_embed_code']) && ($settings['header_embed_code'] != '')) {
+		echo $settings['header_embed_code'];
+	}
+}
+
+add_action('wp_footer', 'quick_adsense_embed_wp_footer');
+function quick_adsense_embed_wp_footer() {
+	$settings = get_option('quick_adsense_settings');
+	if(isset($settings['footer_embed_code']) && ($settings['footer_embed_code'] != '')) {
+		echo $settings['footer_embed_code'];
+	}
+}
+
 add_filter('the_content', 'quick_adsense_the_content');
 function quick_adsense_the_content($content) {
 	global $quickAdsenseAdsDisplayed;

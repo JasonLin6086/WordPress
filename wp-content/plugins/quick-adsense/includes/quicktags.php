@@ -15,15 +15,15 @@ function quick_adsense_quicktag_admin_print_footer_scripts() {
 			}
 			if(!isset($settings['disable_disablead_quicktag_buttons']) || (!$settings['disable_disablead_quicktag_buttons'])) {
 				echo 'QTags.addButton("quick_adsense_quicktag_noads", "NoAds", "\n<!--NoAds-->\n", "", "", "No Ads", 201);';
-				echo 'QTags.addButton("quick_adsense_quicktag_noads", "OffDef", "\n<!--OffDef-->\n", "", "", "No Def", 201);';
-				echo 'QTags.addButton("quick_adsense_quicktag_noads", "OffWidget", "\n<!--OffWidget-->\n", "", "", "No AdWidgets", 201);';
+				echo 'QTags.addButton("quick_adsense_quicktag_offdef", "OffDef", "\n<!--OffDef-->\n", "", "", "No Def", 201);';
+				echo 'QTags.addButton("quick_adsense_quicktag_offwidget", "OffWidget", "\n<!--OffWidget-->\n", "", "", "No AdWidgets", 201);';
 			}
 			if(!isset($settings['disable_positionad_quicktag_buttons']) || (!$settings['disable_positionad_quicktag_buttons'])) {
-				echo 'QTags.addButton("quick_adsense_quicktag_noads", "OffBegin", "\n<!--OffBegin-->\n", "", "", "Disable Beginning of Post Ads", 201);';
-				echo 'QTags.addButton("quick_adsense_quicktag_noads", "OffMiddle", "\n<!--OffMiddle-->\n", "", "", "Disable Middle of Post Ads", 201);';
-				echo 'QTags.addButton("quick_adsense_quicktag_noads", "OffEnd", "\n<!--OffEnd-->\n", "", "", "Disable End of Post Ads", 201);';
-				echo 'QTags.addButton("quick_adsense_quicktag_noads", "OffAfMore", "\n<!--OffAfMore-->\n", "", "", "OffAfMore", 201);';
-				echo 'QTags.addButton("quick_adsense_quicktag_noads", "OffBfLastPara", "\n<!--OffBfLastPara-->\n", "", "", "OffBfLastPara", 201);';
+				echo 'QTags.addButton("quick_adsense_quicktag_offbegin", "OffBegin", "\n<!--OffBegin-->\n", "", "", "Disable Beginning of Post Ads", 201);';
+				echo 'QTags.addButton("quick_adsense_quicktag_offmiddle", "OffMiddle", "\n<!--OffMiddle-->\n", "", "", "Disable Middle of Post Ads", 201);';
+				echo 'QTags.addButton("quick_adsense_quicktag_offend", "OffEnd", "\n<!--OffEnd-->\n", "", "", "Disable End of Post Ads", 201);';
+				echo 'QTags.addButton("quick_adsense_quicktag_offafmore", "OffAfMore", "\n<!--OffAfMore-->\n", "", "", "OffAfMore", 201);';
+				echo 'QTags.addButton("quick_adsense_quicktag_offbflastpara", "OffBfLastPara", "\n<!--OffBfLastPara-->\n", "", "", "OffBfLastPara", 201);';
 			}
 		}
 		
