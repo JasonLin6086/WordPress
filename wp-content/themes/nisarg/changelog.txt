@@ -1,4 +1,8 @@
 == Changelog ==
+=1.2.8.2 September 13 2018
+* Added support for Jetpack Infinite Scroll
+* Added notificationsection for Nisarg's pro version
+
 =1.2.8.1 April 10 2017
 * Changed the min header height to 120px for screen size less than 768px to accomodate long site title.
 

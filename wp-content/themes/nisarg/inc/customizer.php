@@ -79,7 +79,7 @@ function nisarg_customize_register( $wp_customize ) {
 	    'post_options',
 	    array(
 	        'title'     => __('Post Options','nisarg'),
-	        'priority'  => 300
+	        'priority'  => 201,
 	    )
 	);
 

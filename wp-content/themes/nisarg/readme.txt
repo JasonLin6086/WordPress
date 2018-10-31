@@ -1,10 +1,10 @@
 Theme Name: Nisarg
 Author: Falguni Desai
-Author URI: http://falgunidesai.com/
+Author URI: https://www.falgunithemes.com
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Version: 1.2.8.1
-Tested up to: WordPress 4.7.3
+Version: 1.2.8.2
+Tested up to: WordPress 4.9.8
 
 Tags: pink,orange,blue,green,yellow, gray, white,black,light,two-columns, right-sidebar, responsive-layout, theme-options, custom-background, custom-header, custom-colors, custom-menu, featured-images,  post-formats, sticky-post, translation-ready, rtl-language-support,threaded-comments
 Text Domain: nisarg
@@ -86,4 +86,8 @@ sea.png - https://www.pexels.com/photo/sea-black-and-white-ocean-boats-578/
 =  How many depth levels are supported in topbar menu?
 
 Nisarg supports n levels of depth in topbar menu.
+
+= Does Nisarg support Jetpack's Infinite Scroll feature?
+
+Yes, Nisarg supports Jetpack's Infinite Scroll feature.
 

@@ -14,9 +14,9 @@ if ( ! function_exists( 'nisarg_setup' ) ) :
 	 * as indicating support for post thumbnails.
 	 */
 	/**
-	 * Nisarg only works in WordPress 4.7.1 or later.
+	 * Nisarg only works in WordPress 4.9.7 or later.
 	 */
-	if ( version_compare( $GLOBALS['wp_version'], '4.7.1', '<' ) ) {
+	if ( version_compare( $GLOBALS['wp_version'], '4.9.5', '<' ) ) {
 		require get_template_directory() . '/inc/back-compat.php';
 	}
 
@@ -162,6 +162,11 @@ require get_template_directory() . '/inc/template-tags.php';
  * Custom functions that act independently of the theme templates.
  */
 require get_template_directory() . '/inc/extras.php';
+
+/**
+ * Customizer Upgrade to Pro Section.
+ */
+require get_template_directory() . '/inc/upsell/class-customize.php';
 
 /**
  * Customizer additions.

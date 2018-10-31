@@ -1,7 +1,7 @@
 <?php
 /**
  * Jetpack Compatibility File
- * See: https://jetpack.me/
+ * @link https://jetpack.me/
  *
  * @package Nisarg
  */
@@ -25,6 +25,11 @@ add_action( 'after_setup_theme', 'nisarg_jetpack_setup' );
 function nisarg_infinite_scroll_render() {
 	while ( have_posts() ) {
 		the_post();
-		get_template_part( 'template-parts/content', get_post_format() );
+		$post_display_option = get_theme_mod( 'post_display_option', 'post-excerpt' );
+		if ( 'post-excerpt' === $post_display_option ) {
+			get_template_part( 'template-parts/content','excerpt' );
+		} else {
+			get_template_part( 'template-parts/content', get_post_format() );
+		}
 	}
 } // end function nisarg_infinite_scroll_render

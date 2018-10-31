@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: nisarg\n"
-"POT-Creation-Date: 2017-04-06 21:22+0530\n"
+"POT-Creation-Date: 2018-08-09 17:54+0530\n"
 "PO-Revision-Date: 2015-10-19 13:12+0400\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -10,85 +10,85 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.5\n"
+"X-Generator: Poedit 2.1.1\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_nx;_x;esc_html_x;esc_html__;esc_html_e\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: 404.php:16
+#: 404.php:15
 msgid "Oops! That page can&rsquo;t be found."
 msgstr ""
 
-#: 404.php:20
+#: 404.php:19
 msgid ""
 "It looks like nothing was found at this location. Maybe try one of the links "
 "below or a search?"
 msgstr ""
 
-#: archive.php:19
+#: archive.php:15
 msgid "Browsed by"
 msgstr ""
 
-#: comments.php:27
+#: comments.php:26
 #, php-format
 msgid "One thought on &ldquo;%2$s&rdquo;"
 msgstr ""
 
-#: comments.php:47
+#: comments.php:44
 msgid "Comment navigation"
 msgstr ""
 
-#: comments.php:50
+#: comments.php:47
 msgid "Older Comments"
 msgstr ""
 
-#: comments.php:54
+#: comments.php:51
 msgid "Newer Comments"
 msgstr ""
 
-#: comments.php:63 single.php:32
+#: comments.php:60 single.php:29
 msgid "Comments are closed."
 msgstr ""
 
-#: footer.php:16
+#: footer.php:15
 msgid "Proudly Powered by "
 msgstr ""
 
-#: footer.php:17
+#: footer.php:16
 msgid "https://wordpress.org/"
 msgstr ""
 
-#: footer.php:21
+#: footer.php:20
 #, php-format
 msgid "Theme: %1$s"
 msgstr ""
 
-#: functions.php:58
+#: functions.php:55
 msgid "Top Primary Menu"
 msgstr ""
 
-#: functions.php:122
+#: functions.php:113
 msgid "Sidebar"
 msgstr ""
 
-#: functions.php:152
+#: functions.php:140
 msgid "expand child menu"
 msgstr ""
 
-#: functions.php:153
+#: functions.php:141
 msgid "collapse child menu"
 msgstr ""
 
-#: functions.php:206 template-parts/content-aside.php:25
+#: functions.php:197 template-parts/content-aside.php:24
 #: template-parts/content-gallery.php:30 template-parts/content-link.php:29
-#: template-parts/content-quote.php:31 template-parts/content-status.php:20
-#: template-parts/content.php:40
+#: template-parts/content-quote.php:31 template-parts/content-status.php:19
+#: template-parts/content.php:38
 msgid " Read More"
 msgstr ""
 
-#: image.php:27
+#: image.php:23
 #, php-format
 msgid ""
 "Published <span class=\"entry-date\"><time class=\"entry-date\" datetime="
@@ -97,26 +97,26 @@ msgid ""
 "\" rel=\"gallery\">%7$s</a>"
 msgstr ""
 
-#: image.php:37 image.php:103 template-parts/content-page.php:33
+#: image.php:33 image.php:96 template-parts/content-page.php:33
 msgid "Edit"
 msgstr ""
 
-#: image.php:41
+#: image.php:36
 msgid "&larr; Previous"
 msgstr ""
 
-#: image.php:42
+#: image.php:37
 msgid "Next &rarr;"
 msgstr ""
 
-#: image.php:89 template-parts/content-aside.php:28
+#: image.php:82 template-parts/content-aside.php:27
 #: template-parts/content-gallery.php:33 template-parts/content-link.php:32
 #: template-parts/content-page.php:26 template-parts/content-quote.php:34
-#: template-parts/content-status.php:23 template-parts/content.php:45
+#: template-parts/content-status.php:22 template-parts/content.php:43
 msgid "Pages:"
 msgstr ""
 
-#: image.php:95
+#: image.php:88
 #, php-format
 msgid ""
 "<a class=\"comment-link\" href=\"#respond\" title=\"Post a comment\">Post a "
@@ -124,7 +124,7 @@ msgid ""
 "title=\"Trackback URL for your post\" rel=\"trackback\">Trackback URL</a>."
 msgstr ""
 
-#: image.php:97
+#: image.php:90
 #, php-format
 msgid ""
 "Comments are closed, but you can leave a trackback: <a class=\"trackback-link"
@@ -132,33 +132,32 @@ msgid ""
 "\">Trackback URL</a>."
 msgstr ""
 
-#: image.php:99
+#: image.php:92
 msgid ""
 "Trackbacks are closed, but you can <a class=\"comment-link\" href=\"#respond"
 "\" title=\"Post a comment\">post a comment</a>."
 msgstr ""
 
-#: image.php:101
+#: image.php:94
 msgid "Both comments and trackbacks are currently closed."
 msgstr ""
 
 #: inc/back-compat.php:28 inc/back-compat.php:37 inc/back-compat.php:49
 #, php-format
 msgid ""
-"Nisarg requires at least WordPress version 4.2. You are running version %s. "
-"Please upgrade and try again."
+"Nisarg requires at least WordPress version 4.9.5. You are running version "
+"%s. Please upgrade and try again."
 msgstr ""
 
-#: inc/custom-header.php:35 inc/custom-header.php:50
-#: inc/custom-header_old.php:35 inc/custom-header_old.php:50
+#: inc/custom-header.php:34 inc/custom-header.php:49
 msgid "food"
 msgstr ""
 
-#: inc/custom-header.php:40 inc/custom-header_old.php:40
+#: inc/custom-header.php:39
 msgid "buildings"
 msgstr ""
 
-#: inc/custom-header.php:45 inc/custom-header_old.php:45
+#: inc/custom-header.php:44
 msgid "Wood"
 msgstr ""
 
@@ -297,6 +296,14 @@ msgstr ""
 msgid "Edit This Post"
 msgstr ""
 
+#: inc/upsell/class-customize.php:66
+msgid "Looking for more features?"
+msgstr ""
+
+#: inc/upsell/class-customize.php:67
+msgid "Upgrade to Nisarg PRO"
+msgstr ""
+
 #: search.php:13
 #, php-format
 msgid "Search Results for: %s"
@@ -310,11 +317,11 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: sidebar.php:17
+#: sidebar.php:15
 msgid "Archives"
 msgstr ""
 
-#: sidebar.php:24
+#: sidebar.php:21
 msgid "Meta"
 msgstr ""
 

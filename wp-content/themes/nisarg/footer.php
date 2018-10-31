@@ -6,11 +6,10 @@
  *
  * @package Nisarg
  */
-
 ?>
 	</div><!-- #content -->
 	<footer id="colophon" class="site-footer" role="contentinfo">
-		<div class="row site-info">
+		<div class="site-info">
 			<?php echo '&copy; '.date( 'Y' ); ?>
 			<span class="sep"> | </span>
 			<?php printf( esc_html__( 'Proudly Powered by ','nisarg' ) ); ?>

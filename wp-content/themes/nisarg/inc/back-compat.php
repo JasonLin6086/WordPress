@@ -20,12 +20,12 @@ add_action( 'after_switch_theme', 'nisarg_switch_theme' );
  * Add message for unsuccessful theme switch.
  *
  * Prints an update nag after an unsuccessful attempt to switch to
- * Nisarg on WordPress versions prior to 4.7.1.
+ * Nisarg on WordPress versions prior to 4.9.5.
  *
  *
  */
 function nisarg_upgrade_notice() {
-	$message = sprintf( __( 'Nisarg requires at least WordPress version 4.7.1. You are running version %s. Please upgrade and try again.', 'nisarg' ), $GLOBALS['wp_version'] );
+	$message = sprintf( __( 'Nisarg requires at least WordPress version 4.9.5. You are running version %s. Please upgrade and try again.', 'nisarg' ), $GLOBALS['wp_version'] );
 	printf( '<div class="error"><p>%s</p></div>', $message );
 }
 
@@ -34,7 +34,7 @@ function nisarg_upgrade_notice() {
  *
  */
 function nisarg_customize() {
-	wp_die( sprintf( __( 'Nisarg requires at least WordPress version 4.7.1. You are running version %s. Please upgrade and try again.', 'nisarg' ), $GLOBALS['wp_version'] ), '', array(
+	wp_die( sprintf( __( 'Nisarg requires at least WordPress version 4.9.5. You are running version %s. Please upgrade and try again.', 'nisarg' ), $GLOBALS['wp_version'] ), '', array(
 		'back_link' => true,
 	) );
 }
@@ -46,7 +46,7 @@ add_action( 'load-customize.php', 'nisarg_customize' );
  */
 function nisarg_preview() {
 	if ( isset( $_GET['preview'] ) ) {
-		wp_die( sprintf( __( 'Nisarg requires at least WordPress version 4.7.1. You are running version %s. Please upgrade and try again.', 'nisarg' ), $GLOBALS['wp_version'] ) );
+		wp_die( sprintf( __( 'Nisarg requires at least WordPress version 4.9.5. You are running version %s. Please upgrade and try again.', 'nisarg' ), $GLOBALS['wp_version'] ) );
 	}
 }
 add_action( 'template_redirect', 'nisarg_preview' );
