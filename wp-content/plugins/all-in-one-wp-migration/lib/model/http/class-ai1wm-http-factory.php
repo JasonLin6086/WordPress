@@ -22,6 +22,15 @@
  * ███████║███████╗██║  ██║ ╚████╔╝ ██║ ╚═╝ ██║██║  ██║███████║██║  ██╗
  * ╚══════╝╚══════╝╚═╝  ╚═╝  ╚═══╝  ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
  */
-?>
 
-<a href="https://servmask.com/products/webdav-extension" target="_blank">WebDAV</a>
+class Ai1wm_Http_Factory {
+
+	public static function create( $type ) {
+		if ( $type === 'curl' ) {
+			return new Ai1wm_Http_Curl;
+		}
+
+		return new Ai1wm_Http_Stream;
+	}
+
+}

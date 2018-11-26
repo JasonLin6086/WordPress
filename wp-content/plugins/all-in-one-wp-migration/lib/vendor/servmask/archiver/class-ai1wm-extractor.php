@@ -87,7 +87,7 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 
 					// Skip file content so we can move forward to the next file
 					if ( @fseek( $this->file_handle, $data['size'], SEEK_CUR ) === -1 ) {
-						throw new Ai1wm_Not_Seekable_Exception( sprintf( 'Unable to seek to offset of file. File: %s Offset: %d', $this->file_name, $data['size'] ) );
+						throw new Ai1wm_Not_Seekable_Exception( sprintf( 'Unable to seek to offset on file. File: %s Offset: %d', $this->file_name, $data['size'] ) );
 					}
 				}
 			}
@@ -134,7 +134,7 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 
 					// Skip file content so we can move forward to the next file
 					if ( @fseek( $this->file_handle, $data['size'], SEEK_CUR ) === -1 ) {
-						throw new Ai1wm_Not_Seekable_Exception( sprintf( 'Unable to seek to offset of file. File: %s Offset: %d', $this->file_name, $data['size'] ) );
+						throw new Ai1wm_Not_Seekable_Exception( sprintf( 'Unable to seek to offset on file. File: %s Offset: %d', $this->file_name, $data['size'] ) );
 					}
 				}
 			}
@@ -152,13 +152,14 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 	 * @param array  $new_paths    New replace paths
 	 * @param int    $file_written File written (in bytes)
 	 * @param int    $file_offset  File offset (in bytes)
+	 * @param int    $timeout      Process timeout (in seconds)
 	 *
 	 * @throws \Ai1wm_Not_Directory_Exception
 	 * @throws \Ai1wm_Not_Seekable_Exception
 	 *
 	 * @return bool
 	 */
-	public function extract_one_file_to( $location, $exclude = array(), $old_paths = array(), $new_paths = array(), &$file_written = 0, &$file_offset = 0 ) {
+	public function extract_one_file_to( $location, $exclude = array(), $old_paths = array(), $new_paths = array(), &$file_written = 0, &$file_offset = 0, $timeout = 0 ) {
 		if ( false === is_dir( $location ) ) {
 			throw new Ai1wm_Not_Directory_Exception( sprintf( 'Location is not a directory: %s', $location ) );
 		}
@@ -172,7 +173,7 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 		// Seek to file offset to archive file
 		if ( $file_offset > 0 ) {
 			if ( @fseek( $this->file_handle, - $file_offset - 4377, SEEK_CUR ) === -1 ) {
-				throw new Ai1wm_Not_Seekable_Exception( sprintf( 'Unable to seek to offset of file. File: %s Offset: %d', $this->file_name, - $file_offset - 4377 ) );
+				throw new Ai1wm_Not_Seekable_Exception( sprintf( 'Unable to seek to offset on file. File: %s Offset: %d', $this->file_name, - $file_offset - 4377 ) );
 			}
 		}
 
@@ -242,14 +243,14 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 						$file_written = 0;
 
 						// We have a match, let's extract the file
-						if ( ( $completed = $this->extract_to( $file_name, $file_size, $file_mtime, $file_written, $file_offset ) ) ) {
+						if ( ( $completed = $this->extract_to( $file_name, $file_size, $file_mtime, $file_written, $file_offset, $timeout ) ) ) {
 							$file_offset = 0;
 						}
 					} else {
 
 						// We don't have a match, skip file content
 						if ( @fseek( $this->file_handle, $file_size, SEEK_CUR ) === -1 ) {
-							throw new Ai1wm_Not_Seekable_Exception( sprintf( 'Unable to seek to offset of file. File: %s Offset: %d', $this->file_name, $file_size ) );
+							throw new Ai1wm_Not_Seekable_Exception( sprintf( 'Unable to seek to offset on file. File: %s Offset: %d', $this->file_name, $file_size ) );
 						}
 					}
 				}
@@ -264,16 +265,16 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 	 *
 	 * @param string $location     Location where to extract files
 	 * @param array  $files        Files to extract
-	 * @param array  $exclude      Files to exclude
 	 * @param int    $file_written File written (in bytes)
 	 * @param int    $file_offset  File offset (in bytes)
+	 * @param int    $timeout      Process timeout (in seconds)
 	 *
 	 * @throws \Ai1wm_Not_Directory_Exception
 	 * @throws \Ai1wm_Not_Seekable_Exception
 	 *
 	 * @return bool
 	 */
-	public function extract_by_files_array( $location, $files = array(), $exclude = array(), &$file_written = 0, &$file_offset = 0 ) {
+	public function extract_by_files_array( $location, $files = array(), &$file_written = 0, &$file_offset = 0, $timeout = 0 ) {
 		if ( false === is_dir( $location ) ) {
 			throw new Ai1wm_Not_Directory_Exception( sprintf( 'Location is not a directory: %s', $location ) );
 		}
@@ -290,7 +291,7 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 		// Seek to file offset to archive file
 		if ( $file_offset > 0 ) {
 			if ( @fseek( $this->file_handle, - $file_offset - 4377, SEEK_CUR ) === -1 ) {
-				throw new Ai1wm_Not_Seekable_Exception( sprintf( 'Unable to seek to offset of file. File: %s Offset: %d', $this->file_name, - $file_offset - 4377 ) );
+				throw new Ai1wm_Not_Seekable_Exception( sprintf( 'Unable to seek to offset on file. File: %s Offset: %d', $this->file_name, - $file_offset - 4377 ) );
 			}
 		}
 
@@ -326,18 +327,10 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 					// Set should include file
 					$should_include_file = false;
 
-					// Should we extract this file?
+					// Should be extract this file?
 					for ( $i = 0; $i < count( $files ); $i++ ) {
 						if ( strpos( $file_name . DIRECTORY_SEPARATOR, $files[ $i ] . DIRECTORY_SEPARATOR ) === 0 ) {
 							$should_include_file = true;
-							break;
-						}
-					}
-
-					// Should we skip this file?
-					for ( $i = 0; $i < count( $exclude ); $i++ ) {
-						if ( strpos( $file_name . DIRECTORY_SEPARATOR, $exclude[ $i ] . DIRECTORY_SEPARATOR ) === 0 ) {
-							$should_include_file = false;
 							break;
 						}
 					}
@@ -359,19 +352,19 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 						$file_written = 0;
 
 						// We have a match, let's extract the file and remove it from the array
-						if ( ( $completed = $this->extract_to( $file_name, $file_size, $file_mtime, $file_written, $file_offset ) ) ) {
+						if ( ( $completed = $this->extract_to( $file_name, $file_size, $file_mtime, $file_written, $file_offset, $timeout ) ) ) {
 							$file_offset = 0;
 						}
 					} else {
 
 						// We don't have a match, skip file content
 						if ( @fseek( $this->file_handle, $file_size, SEEK_CUR ) === -1 ) {
-							throw new Ai1wm_Not_Seekable_Exception( sprintf( 'Unable to seek to offset of file. File: %s Offset: %d', $this->file_name, $file_size ) );
+							throw new Ai1wm_Not_Seekable_Exception( sprintf( 'Unable to seek to offset on file. File: %s Offset: %d', $this->file_name, $file_size ) );
 						}
 					}
 
 					// Time elapsed
-					if ( ( $timeout = apply_filters( 'ai1wm_completed_timeout', 10 ) ) ) {
+					if ( $timeout ) {
 						if ( ( microtime( true ) - $start ) > $timeout ) {
 							$completed = false;
 							break;
@@ -392,6 +385,7 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 	 * @param array  $file_mtime   File modified time (in seconds)
 	 * @param int    $file_written File written (in bytes)
 	 * @param int    $file_offset  File offset (in bytes)
+	 * @param int    $timeout      Process timeout (in seconds)
 	 *
 	 * @throws \Ai1wm_Not_Seekable_Exception
 	 * @throws \Ai1wm_Not_Readable_Exception
@@ -399,7 +393,7 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 	 *
 	 * @return bool
 	 */
-	private function extract_to( $file_name, $file_size, $file_mtime, &$file_written = 0, &$file_offset = 0 ) {
+	private function extract_to( $file_name, $file_size, $file_mtime, &$file_written = 0, &$file_offset = 0, $timeout = 0 ) {
 		$file_written = 0;
 
 		// Flag to hold if file data has been processed
@@ -411,7 +405,7 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 		// Seek to file offset to archive file
 		if ( $file_offset > 0 ) {
 			if ( @fseek( $this->file_handle, $file_offset, SEEK_CUR ) === -1 ) {
-				throw new Ai1wm_Not_Seekable_Exception( sprintf( 'Unable to seek to offset of file. File: %s Offset: %d', $this->file_name, $file_size ) );
+				throw new Ai1wm_Not_Seekable_Exception( sprintf( 'Unable to seek to offset on file. File: %s Offset: %d', $this->file_name, $file_size ) );
 			}
 		}
 
@@ -452,7 +446,7 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 				}
 
 				// Time elapsed
-				if ( ( $timeout = apply_filters( 'ai1wm_completed_timeout', 10 ) ) ) {
+				if ( $timeout ) {
 					if ( ( microtime( true ) - $start ) > $timeout ) {
 						$completed = false;
 						break;
@@ -476,7 +470,7 @@ class Ai1wm_Extractor extends Ai1wm_Archiver {
 
 			// We don't have file permissions, skip file content
 			if ( @fseek( $this->file_handle, $file_size, SEEK_CUR ) === -1 ) {
-				throw new Ai1wm_Not_Seekable_Exception( sprintf( 'Unable to seek to offset of file. File: %s Offset: %d', $this->file_name, $file_size ) );
+				throw new Ai1wm_Not_Seekable_Exception( sprintf( 'Unable to seek to offset on file. File: %s Offset: %d', $this->file_name, $file_size ) );
 			}
 		}
 

@@ -22,6 +22,20 @@
  * ███████║███████╗██║  ██║ ╚████╔╝ ██║ ╚═╝ ██║██║  ██║███████║██║  ██╗
  * ╚══════╝╚══════╝╚═╝  ╚═╝  ╚═══╝  ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
  */
-?>
 
-<a href="https://servmask.com/products/webdav-extension" target="_blank">WebDAV</a>
+class Ai1wm_Import_Resolve {
+
+	public static function execute( $params ) {
+
+		// Set progress
+		Ai1wm_Status::info( __( 'Resolving URL address...', AI1WM_PLUGIN_NAME ) );
+
+		// HTTP resolve
+		Ai1wm_Http::resolve( admin_url( 'admin-ajax.php?action=ai1wm_resolve' ) );
+
+		// Set progress
+		Ai1wm_Status::info( __( 'Done resolving URL address.', AI1WM_PLUGIN_NAME ) );
+
+		return $params;
+	}
+}

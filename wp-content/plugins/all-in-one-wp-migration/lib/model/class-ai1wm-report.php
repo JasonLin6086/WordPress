@@ -26,7 +26,7 @@
 class Ai1wm_Report {
 
 	/**
-	 * Submit customer report to servmask.com
+	 * Submit customer report to ServMask.com
 	 *
 	 * @param  string  $email   User e-mail
 	 * @param  string  $message User message
@@ -48,8 +48,7 @@ class Ai1wm_Report {
 			$response = wp_remote_post(
 				AI1WM_REPORT_URL,
 				array(
-					'timeout' => 15,
-					'body'    => array(
+					'body' => array(
 						'email'   => $email,
 						'message' => $message,
 					),

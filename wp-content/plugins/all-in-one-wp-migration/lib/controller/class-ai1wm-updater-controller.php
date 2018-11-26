@@ -53,7 +53,7 @@ class Ai1wm_Updater_Controller {
 	}
 
 	public static function updater( $params = array() ) {
-		ai1wm_setup_environment();
+		$extensions = Ai1wm_Extensions::get();
 
 		// Set params
 		if ( empty( $params ) ) {
@@ -71,8 +71,6 @@ class Ai1wm_Updater_Controller {
 		if ( isset( $params['ai1wm_extension'] ) ) {
 			$extension = trim( $params['ai1wm_extension'] );
 		}
-
-		$extensions = Ai1wm_Extensions::get();
 
 		// Verify whether extension exists
 		if ( isset( $extensions[ $extension ] ) ) {

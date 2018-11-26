@@ -23,28 +23,40 @@
  * ╚══════╝╚══════╝╚═╝  ╚═╝  ╚═══╝  ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
  */
 
-class Ai1wm_Recursive_Extension_Filter extends RecursiveFilterIterator {
+class Ai1wm_Resolve_Controller {
 
-	protected $include = array();
+	public static function resolve( $params = array() ) {
 
-	public function __construct( RecursiveIterator $iterator, $include = array() ) {
-		parent::__construct( $iterator );
-
-		// Set include filter
-		$this->include = $include;
-	}
-
-	public function accept() {
-		if ( $this->getInnerIterator()->isFile() ) {
-			if ( ! in_array( pathinfo( $this->getInnerIterator()->getFilename(), PATHINFO_EXTENSION ), $this->include ) ) {
-				return false;
-			}
+		// Set params
+		if ( empty( $params ) ) {
+			$params = stripslashes_deep( $_REQUEST );
 		}
 
-		return true;
-	}
+		// Set secret key
+		$secret_key = null;
+		if ( isset( $params['secret_key'] ) ) {
+			$secret_key = trim( $params['secret_key'] );
+		}
 
-	public function getChildren() {
-		return new self( $this->getInnerIterator()->getChildren(), $this->include );
+		try {
+			// Ensure that unauthorized people cannot access resolve action
+			ai1wm_verify_secret_key( $secret_key );
+		} catch ( Ai1wm_Not_Valid_Secret_Key_Exception $e ) {
+			exit;
+		}
+
+		// Set IP address
+		if ( isset( $params['url_ip'] ) && ( $ip = $params['url_ip'] ) ) {
+			update_option( AI1WM_URL_IP, $ip );
+		}
+
+		// Set adapter
+		if ( isset( $params['url_adapter'] ) && ( $adapter = $params['url_adapter'] ) ) {
+			if ( $adapter === 'curl' ) {
+				update_option( AI1WM_URL_ADAPTER, 'curl' );
+			} else {
+				update_option( AI1WM_URL_ADAPTER, 'stream' );
+			}
+		}
 	}
 }

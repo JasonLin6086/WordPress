@@ -29,7 +29,7 @@ class Ai1wm_Status_Controller {
 
 		// Set params
 		if ( empty( $params ) ) {
-			$params = stripslashes_deep( $_GET );
+			$params = stripslashes_deep( $_REQUEST );
 		}
 
 		// Set secret key

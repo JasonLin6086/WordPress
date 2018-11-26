@@ -27,41 +27,6 @@ class Ai1wm_Import_Content {
 
 	public static function execute( $params ) {
 
-		// Set archive bytes offset
-		if ( isset( $params['archive_bytes_offset'] ) ) {
-			$archive_bytes_offset = (int) $params['archive_bytes_offset'];
-		} else {
-			$archive_bytes_offset = 0;
-		}
-
-		// Set file bytes offset
-		if ( isset( $params['file_bytes_offset'] ) ) {
-			$file_bytes_offset = (int) $params['file_bytes_offset'];
-		} else {
-			$file_bytes_offset = 0;
-		}
-
-		// Get processed files size
-		if ( isset( $params['processed_files_size'] ) ) {
-			$processed_files_size = (int) $params['processed_files_size'];
-		} else {
-			$processed_files_size = 0;
-		}
-
-		// Get total files size
-		if ( isset( $params['total_files_size'] ) ) {
-			$total_files_size = (int) $params['total_files_size'];
-		} else {
-			$total_files_size = 1;
-		}
-
-		// Get total files count
-		if ( isset( $params['total_files_count'] ) ) {
-			$total_files_count = (int) $params['total_files_count'];
-		} else {
-			$total_files_count = 1;
-		}
-
 		// Read blogs.json file
 		$handle = ai1wm_open( ai1wm_blogs_path( $params ), 'r' );
 
@@ -71,6 +36,41 @@ class Ai1wm_Import_Content {
 
 		// Close handle
 		ai1wm_close( $handle );
+
+		// Set file bytes offset
+		if ( isset( $params['file_bytes_offset'] ) ) {
+			$file_bytes_offset = (int) $params['file_bytes_offset'];
+		} else {
+			$file_bytes_offset = 0;
+		}
+
+		// Set archive bytes offset
+		if ( isset( $params['archive_bytes_offset'] ) ) {
+			$archive_bytes_offset = (int) $params['archive_bytes_offset'];
+		} else {
+			$archive_bytes_offset = 0;
+		}
+
+		// Get total files count
+		if ( isset( $params['total_files_count'] ) ) {
+			$total_files_count = (int) $params['total_files_count'];
+		} else {
+			$total_files_count = 1;
+		}
+
+		// Get total files size
+		if ( isset( $params['total_files_size'] ) ) {
+			$total_files_size = (int) $params['total_files_size'];
+		} else {
+			$total_files_size = 1;
+		}
+
+		// Get processed files size
+		if ( isset( $params['processed_files_size'] ) ) {
+			$processed_files_size = (int) $params['processed_files_size'];
+		} else {
+			$processed_files_size = 0;
+		}
 
 		// What percent of files have we processed?
 		$progress = (int) min( ( $processed_files_size / $total_files_size ) * 100, 100 );
@@ -154,11 +154,11 @@ class Ai1wm_Import_Content {
 			) );
 
 			// Extract a file from archive to WP_CONTENT_DIR
-			if ( ( $completed = $archive->extract_one_file_to( WP_CONTENT_DIR, $exclude_files, $old_paths, $new_paths, $file_bytes_written, $file_bytes_offset ) ) ) {
+			if ( ( $completed = $archive->extract_one_file_to( WP_CONTENT_DIR, $exclude_files, $old_paths, $new_paths, $file_bytes_written, $file_bytes_offset, 10 ) ) ) {
 				$file_bytes_offset = 0;
 			}
 
-			// Get archive bytes offset
+			// Set archive bytes offset
 			$archive_bytes_offset = $archive->get_file_pointer();
 
 			// Increment processed files size
@@ -171,51 +171,37 @@ class Ai1wm_Import_Content {
 			Ai1wm_Status::info( sprintf( __( 'Restoring %d files...<br />%d%% complete', AI1WM_PLUGIN_NAME ), $total_files_count, $progress ) );
 
 			// More than 10 seconds have passed, break and do another request
-			if ( ( $timeout = apply_filters( 'ai1wm_completed_timeout', 10 ) ) ) {
-				if ( ( microtime( true ) - $start ) > $timeout ) {
-					$completed = false;
-					break;
-				}
+			if ( ( microtime( true ) - $start ) > 10 ) {
+				$completed = false;
+				break;
 			}
 		}
 
 		// End of the archive?
 		if ( $archive->has_reached_eof() ) {
 
-			// Unset archive bytes offset
-			unset( $params['archive_bytes_offset'] );
-
 			// Unset file bytes offset
 			unset( $params['file_bytes_offset'] );
 
+			// Unset archive bytes offset
+			unset( $params['archive_bytes_offset'] );
+
 			// Unset processed files size
 			unset( $params['processed_files_size'] );
-
-			// Unset total files size
-			unset( $params['total_files_size'] );
-
-			// Unset total files count
-			unset( $params['total_files_count'] );
 
 			// Unset completed flag
 			unset( $params['completed'] );
 
 		} else {
 
-			// Set archive bytes offset
-			$params['archive_bytes_offset'] = $archive_bytes_offset;
-
 			// Set file bytes offset
 			$params['file_bytes_offset'] = $file_bytes_offset;
 
+			// Set archive bytes offset
+			$params['archive_bytes_offset'] = $archive_bytes_offset;
+
 			// Set processed files size
 			$params['processed_files_size'] = $processed_files_size;
-
-			// Set total files size
-			$params['total_files_size'] = $total_files_size;
-
-			// Set total files count
-			$params['total_files_count'] = $total_files_count;
 
 			// Set completed flag
 			$params['completed'] = $completed;

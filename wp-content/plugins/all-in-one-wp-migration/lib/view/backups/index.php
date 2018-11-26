@@ -28,10 +28,7 @@
 	<div class="ai1wm-row">
 		<div class="ai1wm-left">
 			<div class="ai1wm-holder">
-				<h1>
-					<i class="ai1wm-icon-export"></i>
-					<?php _e( 'Backups', AI1WM_PLUGIN_NAME ); ?>
-				</h1>
+				<h1><i class="ai1wm-icon-export"></i> <?php _e( 'Backups', AI1WM_PLUGIN_NAME ); ?></h1>
 
 				<?php include AI1WM_TEMPLATES_PATH . '/common/report-problem.php'; ?>
 
@@ -61,7 +58,7 @@
 											<?php echo esc_html( basename( $backup['filename'] ) ); ?>
 										</td>
 										<td class="ai1wm-column-date">
-											<?php echo esc_html( sprintf( __( '%s ago', AI1WM_PLUGIN_NAME ), human_time_diff( $backup['mtime'] ) ) ); ?>
+											<?php echo human_time_diff( $backup['mtime'] ); ?> <?php _e( 'ago', AI1WM_PLUGIN_NAME ); ?>
 										</td>
 										<td class="ai1wm-column-size">
 											<?php if ( is_null( $backup['size'] ) ) : ?>
@@ -71,16 +68,16 @@
 											<?php endif; ?>
 										</td>
 										<td class="ai1wm-column-actions ai1wm-backup-actions">
-											<a href="<?php echo ai1wm_backup_url( array( 'archive' => esc_attr( $backup['filename'] ) ) ); ?>" class="ai1wm-button-green ai1wm-backup-download">
-												<i class="ai1wm-icon-arrow-down"></i>
+											<a href="<?php echo ai1wm_backup_url( array( 'archive' => esc_attr( $backup['filename'] ) ) ); ?>" class="ai1wm-button-green ai1wm-button-alone ai1wm-backup-download">
+												<i class="ai1wm-icon-arrow-down ai1wm-icon-alone"></i>
 												<span><?php _e( 'Download', AI1WM_PLUGIN_NAME ); ?></span>
 											</a>
-											<a href="#" data-archive="<?php echo esc_attr( $backup['filename'] ); ?>" class="ai1wm-button-gray ai1wm-backup-restore">
-												<i class="ai1wm-icon-cloud-upload"></i>
+											<a href="#" data-archive="<?php echo esc_attr( $backup['filename'] ); ?>" class="ai1wm-button-gray ai1wm-button-alone ai1wm-backup-restore">
+												<i class="ai1wm-icon-cloud-upload ai1wm-icon-alone"></i>
 												<span><?php _e( 'Restore', AI1WM_PLUGIN_NAME ); ?></span>
 											</a>
-											<a href="#" data-archive="<?php echo esc_attr( $backup['filename'] ); ?>" class="ai1wm-button-red ai1wm-backup-delete">
-												<i class="ai1wm-icon-close"></i>
+											<a href="#" data-archive="<?php echo esc_attr( $backup['filename'] ); ?>" class="ai1wm-button-red ai1wm-button-alone ai1wm-backup-delete">
+												<i class="ai1wm-icon-close ai1wm-icon-alone"></i>
 												<span><?php _e( 'Delete', AI1WM_PLUGIN_NAME ); ?></span>
 											</a>
 										</td>
@@ -94,7 +91,7 @@
 								<?php _e( 'There are no backups available at this time, why not create a new one?', AI1WM_PLUGIN_NAME ); ?>
 							</p>
 							<p>
-								<a href="<?php echo esc_url( network_admin_url( 'admin.php?page=ai1wm_export' ) ); ?>" class="ai1wm-button-green">
+								<a href="<?php echo network_admin_url( 'admin.php?page=site-migration-export' ); ?>" class="ai1wm-button-green">
 									<i class="ai1wm-icon-export"></i>
 									<?php _e( 'Create backup', AI1WM_PLUGIN_NAME ); ?>
 								</a>
